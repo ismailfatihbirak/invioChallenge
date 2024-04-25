@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -67,26 +68,12 @@ import com.example.inviochallenge.domain.model.Universities
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(navController: NavController,viewModel: HomeViewModel = hiltViewModel()) {
-    val lazyListState = rememberLazyListState()
 
     val stateList by remember(viewModel.state) {
         derivedStateOf {
             viewModel.state.value.unis
         }
     }
-    LaunchedEffect(lazyListState){
-        snapshotFlow { lazyListState.isScrollInProgress}
-            .collect {scrollInProgress ->
-                if (!scrollInProgress) {
-                    if (!scrollInProgress && lazyListState.firstVisibleItemIndex + lazyListState.layoutInfo.totalItemsCount >= lazyListState.layoutInfo.totalItemsCount) {
-                        viewModel.loadNextPage() // Son sayfaya ulaşıldığında bir sonraki sayfayı yükle
-                        Log.e("axax","çalıştı")
-                    }
-
-                }
-            }
-    }
-
     var _stateList by rememberSaveable {
         mutableStateOf(listOf<Data>())
     }
@@ -94,6 +81,8 @@ fun HomeScreen(navController: NavController,viewModel: HomeViewModel = hiltViewM
     LaunchedEffect(stateList) {
         _stateList += stateList.subtract(_stateList)
     }
+
+
 
     Scaffold(
         topBar = {
@@ -120,11 +109,20 @@ fun HomeScreen(navController: NavController,viewModel: HomeViewModel = hiltViewM
             modifier = Modifier
                 .padding(innerPadding)
         ){
-            LazyColumn (state = lazyListState){
-                items(_stateList) { data ->
-                    DataItem(data,navController,viewModel)
+
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(_stateList) { item ->//burda _stateList 'i stateList ile
+                    // çevirdiğimizde 3.sayfa yükleniyor ama tekrar tekrar ui güncelleniyor düzgün görüntü olmuyor
+                    DataItem(item,navController,viewModel)
+                }
+                item {
+                    LaunchedEffect(true) {
+                        viewModel.loadNextPage()
+                        Log.e("ababab","sayfasonu")
+                    }
                 }
             }
+
         }
     }
 }
