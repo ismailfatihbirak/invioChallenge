@@ -108,6 +108,9 @@ class HomeViewModel @Inject constructor(
     fun loadNextPage() {
         val currentPage = _state.value.page
         getUniversities(currentPage)
+        if (currentPage == 2){
+            getUniversities(currentPage+1)
+        }
     }
     fun loadFavUni() {
         getFavoritesUni()

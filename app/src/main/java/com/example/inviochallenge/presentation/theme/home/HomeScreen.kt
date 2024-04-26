@@ -111,14 +111,12 @@ fun HomeScreen(navController: NavController,viewModel: HomeViewModel = hiltViewM
         ){
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(_stateList) { item ->//burda _stateList 'i stateList ile
-                    // çevirdiğimizde 3.sayfa yükleniyor ama tekrar tekrar ui güncelleniyor düzgün görüntü olmuyor
+                items(_stateList) { item ->
                     DataItem(item,navController,viewModel)
                 }
                 item {
                     LaunchedEffect(true) {
                         viewModel.loadNextPage()
-                        Log.e("ababab","sayfasonu")
                     }
                 }
             }
