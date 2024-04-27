@@ -32,7 +32,7 @@ fun SplashScreen(navController: NavController, viewModel: HomeViewModel = hiltVi
         Image(painter = painterResource(id = R.drawable.little_elips), contentDescription = "")
         Image(painter = painterResource(id = R.drawable.splash_icon), contentDescription = "")
     }
-
+    viewModel.loadNextPage()
     LaunchedEffect(true){
         delay(1000)
         val state = viewModel.state.value

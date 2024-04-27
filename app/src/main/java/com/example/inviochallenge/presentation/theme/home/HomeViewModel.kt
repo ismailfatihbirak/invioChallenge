@@ -13,6 +13,7 @@ import com.example.inviochallenge.domain.use_case.insert_fav_uni.InsertFavUniUse
 import com.example.inviochallenge.domain.use_case.is_favorite_exists.isFavoriteExistsUseCase
 import com.example.inviochallenge.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -30,6 +31,8 @@ class HomeViewModel @Inject constructor(
     private val _state = mutableStateOf<HomeState>(HomeState())
     val state: State<HomeState> = _state
 
+    private val currentPage = MutableStateFlow(0)
+
     init {
         loadFavUni()
     }
@@ -44,8 +47,7 @@ class HomeViewModel @Inject constructor(
                     Log.e("ababab",_state.value.page.toString())
 
                     _state.value = currentState.copy(
-                        unis = currentState.unis + updatedList,
-                        page = currentState.page + 1
+                        unis = currentState.unis + updatedList
                     )
 
                     Log.e("ababab",_state.value.page.toString())
@@ -106,11 +108,8 @@ class HomeViewModel @Inject constructor(
 
 
     fun loadNextPage() {
-        val currentPage = _state.value.page
-        getUniversities(currentPage)
-        if (currentPage == 2){
-            getUniversities(currentPage+1)
-        }
+        currentPage.value++
+        getUniversities(currentPage.value)
     }
     fun loadFavUni() {
         getFavoritesUni()
