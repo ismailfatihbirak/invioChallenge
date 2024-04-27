@@ -35,6 +35,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.inviochallenge.R
+import com.example.inviochallenge.domain.model.Data
+import com.example.inviochallenge.domain.model.RoomModel
 import com.example.inviochallenge.domain.model.Universities
 import com.example.inviochallenge.presentation.theme.home.DataItem
 import com.example.inviochallenge.presentation.theme.home.HomeViewModel
@@ -43,7 +45,6 @@ import com.example.inviochallenge.presentation.theme.home.UniversityItem
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FavoriteScreen(navController: NavController,
-    favviewModel: FavoriteViewModel = hiltViewModel(),
     homeViewModel: HomeViewModel = hiltViewModel()) {
     Scaffold(
         topBar = {
@@ -70,10 +71,15 @@ fun FavoriteScreen(navController: NavController,
             modifier = Modifier
                 .padding(innerPadding)
         ){
-            favviewModel.state.value.favUnis.forEach { university ->
-                val uni = Universities(university.name,university.phone,university.fax,university.website,university.email,university.adress,university.rector)
-                UniversityItem(uni,navController,homeViewModel,Modifier.padding(all = 6.dp))
+            if (homeViewModel.favState.value.favUnis.isNullOrEmpty()){
+                Text(text = "Favori eklemediniz", fontSize = 25.sp)
+            }else{
+                homeViewModel.favState.value.favUnis.forEach { university ->
+                    val uni = Universities(university.name,university.phone,university.fax,university.website,university.email,university.adress,university.rector)
+                    UniversityItem(uni,navController,homeViewModel,Modifier.padding(all = 6.dp),false)
+                }
             }
+            
         }
     }
 }

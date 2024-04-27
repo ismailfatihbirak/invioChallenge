@@ -2,26 +2,17 @@ package com.example.inviochallenge.presentation.theme.home
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.net.Uri
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Favorite
@@ -35,34 +26,26 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.inviochallenge.R
 import com.example.inviochallenge.domain.model.Data
 import com.example.inviochallenge.domain.model.RoomModel
 import com.example.inviochallenge.domain.model.Universities
-
-
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -166,7 +149,8 @@ fun DataItem(data: Data,navController: NavController,viewModel: HomeViewModel) {
                     Modifier.padding(
                     start = 30.dp,
                     top = 6.dp,
-                    bottom = 6.dp))
+                    bottom = 6.dp),
+                    true)
 
             }
         }
@@ -174,7 +158,7 @@ fun DataItem(data: Data,navController: NavController,viewModel: HomeViewModel) {
 }
 
 @Composable
-fun UniversityItem(university: Universities,navController: NavController,viewModel: HomeViewModel,modifier: Modifier) {
+fun UniversityItem(university: Universities,navController: NavController,viewModel: HomeViewModel,modifier: Modifier,iconState:Boolean) {
     var isExpanded by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
     viewModel.isFavorite(university.name!!)
@@ -215,32 +199,43 @@ fun UniversityItem(university: Universities,navController: NavController,viewMod
                     .padding(vertical = 10.dp)
                     .weight(1f)
             )
-
-            IconButton(onClick = {
-                if (isUniversityFavorite.value == true) {
-                    viewModel.deleteFavUni(university.name!!)
-                    isUniversityFavorite.value = false
-                } else {
-                    val insertUni = RoomModel(
-                        uni_id = 0,
-                        icon_state = "true",
-                        name = university.name ?: "",
-                        phone = university.phone ?: "",
-                        fax = university.fax ?: "",
-                        website = university.website ?: "",
-                        email = university.email ?: "",
-                        adress = university.adress ?: "",
-                        rector = university.rector ?: "",
+            if (iconState){
+                IconButton(onClick = {
+                    if (isUniversityFavorite.value == true) {
+                        viewModel.deleteFavUni(university.name!!)
+                        isUniversityFavorite.value = false
+                    } else {
+                        val insertUni = RoomModel(
+                            uni_id = 0,
+                            icon_state = "true",
+                            name = university.name ?: "",
+                            phone = university.phone ?: "",
+                            fax = university.fax ?: "",
+                            website = university.website ?: "",
+                            email = university.email ?: "",
+                            adress = university.adress ?: "",
+                            rector = university.rector ?: "",
+                        )
+                        viewModel.insertFavUni(insertUni)
+                        isUniversityFavorite.value = true
+                    }
+                }) {
+                    Icon(
+                        imageVector = if (isUniversityFavorite.value == true) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = ""
                     )
-                    viewModel.insertFavUni(insertUni)
-                    isUniversityFavorite.value = true
                 }
-            }) {
-                Icon(
-                    imageVector = if (isUniversityFavorite.value == true) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                    contentDescription = ""
-                )
+            }else{
+                IconButton(onClick = {
+                    viewModel.deleteFavUni(university.name!!)
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Favorite,
+                        contentDescription = ""
+                    )
+                }
             }
+
 
         }
     }

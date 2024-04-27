@@ -31,6 +31,9 @@ class HomeViewModel @Inject constructor(
     private val _state = mutableStateOf<HomeState>(HomeState())
     val state: State<HomeState> = _state
 
+    private val _favState = mutableStateOf<HomeState>(HomeState())
+    val favState: State<HomeState> = _favState
+
     private val currentPage = MutableStateFlow(0)
 
     init {
@@ -66,13 +69,13 @@ class HomeViewModel @Inject constructor(
         getFavUniUseCase.executeGetUniversities().onEach {
             when (it) {
                 is Resource.Success -> {
-                    _state.value = HomeState(favUnis = it.data ?: emptyList())
+                    _favState.value = HomeState(favUnis = it.data ?: emptyList())
                 }
                 is Resource.Loading -> {
-                    _state.value = HomeState(isLoading = true)
+                    _favState.value = HomeState(isLoading = true)
                 }
                 is Resource.Error -> {
-                    _state.value = HomeState(error = it.message ?: "Error")
+                    _favState.value = HomeState(error = it.message ?: "Error")
                 }
             }
         }.launchIn(viewModelScope)
@@ -119,6 +122,7 @@ class HomeViewModel @Inject constructor(
     }
     fun deleteFavUni(name: String) {
         deleteFavoritesUni(name)
+        loadFavUni()
     }
     fun isFavorite(name: String) {
         isFavoriteExists(name)
