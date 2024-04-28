@@ -17,7 +17,4 @@ interface UniDao {
     @Query("DELETE FROM universities WHERE name = :name")
     suspend fun deleteFavoriteUni(name: String)
 
-    @Query("SELECT EXISTS(SELECT 1 FROM universities WHERE name = :name)")
-    suspend fun isFavoriteUniExists(name: String): Boolean
-
 }

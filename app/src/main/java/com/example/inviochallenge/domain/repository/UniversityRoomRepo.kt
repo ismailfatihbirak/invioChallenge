@@ -9,5 +9,4 @@ interface UniversityRoomRepo {
 
     suspend fun deleteFavoriteUni(name: String)
 
-    suspend fun isFavoriteUniExists(name: String): Boolean
 }

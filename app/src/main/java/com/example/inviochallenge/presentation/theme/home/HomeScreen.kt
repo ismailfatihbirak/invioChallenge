@@ -66,7 +66,6 @@ fun HomeScreen(navController: NavController,viewModel: HomeViewModel = hiltViewM
     }
 
 
-
     Scaffold(
         topBar = {
             TopAppBar(
@@ -112,6 +111,8 @@ fun HomeScreen(navController: NavController,viewModel: HomeViewModel = hiltViewM
 fun DataItem(data: Data,navController: NavController,viewModel: HomeViewModel) {
     var isExpanded by rememberSaveable { mutableStateOf(false) }
 
+    val favStateList by remember { mutableStateOf(viewModel.favState.value.favUnis)}
+
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 30.dp,),
@@ -144,30 +145,34 @@ fun DataItem(data: Data,navController: NavController,viewModel: HomeViewModel) {
             )
         }
         if (isExpanded) {
-            data.universities.forEach { university ->
-                UniversityItem(university,navController,viewModel,
-                    Modifier.padding(
-                    start = 30.dp,
-                    top = 6.dp,
-                    bottom = 6.dp),
-                    true)
-
+            val favUniversityNames = favStateList.map { it.name }
+            data.universities.forEach { uni ->
+                val isFavorite = uni.name in favUniversityNames
+                UniversityItem(
+                    university = uni,
+                    navController = navController,
+                    viewModel = viewModel,
+                    modifier = Modifier.padding(start = 30.dp, top = 6.dp, bottom = 6.dp),
+                    iconState = true,
+                    favUni = isFavorite
+                )
             }
         }
+
     }
 }
 
 @Composable
-fun UniversityItem(university: Universities,navController: NavController,viewModel: HomeViewModel,modifier: Modifier,iconState:Boolean) {
+fun UniversityItem(university: Universities,
+                   navController: NavController,
+                   viewModel: HomeViewModel,
+                   modifier: Modifier,
+                   iconState:Boolean,
+                   favUni :Boolean) {
+
     var isExpanded by rememberSaveable { mutableStateOf(false) }
     val context = LocalContext.current
-    viewModel.isFavorite(university.name!!)
-    val isUniversityFavorite = rememberSaveable { mutableStateOf(viewModel.state.value.favExists) }
-    if (isUniversityFavorite.value == false){
-        Log.e("axax","true")
-    }else{
-        Log.e("axax","false")
-    }
+    val favState = rememberSaveable{ mutableStateOf(favUni) }
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 30.dp,),
@@ -178,12 +183,12 @@ fun UniversityItem(university: Universities,navController: NavController,viewMod
         ) {
             if (university.phone != "-"){
                 if (!isExpanded){
-                    IconButton(onClick = { isExpanded = !isExpanded }) {
+                    IconButton(onClick = { isExpanded = !isExpanded}) {
                         Icon(Icons.Default.Add,
                             contentDescription = "")
                     }
                 }else{
-                    IconButton(onClick = { isExpanded = !isExpanded }) {
+                    IconButton(onClick = { isExpanded = !isExpanded}) {
                         Icon(painter = painterResource(id = R.drawable.baseline_remove_24),
                             contentDescription = "")
                     }
@@ -201,9 +206,9 @@ fun UniversityItem(university: Universities,navController: NavController,viewMod
             )
             if (iconState){
                 IconButton(onClick = {
-                    if (isUniversityFavorite.value == true) {
+                    if (favState.value) {
                         viewModel.deleteFavUni(university.name!!)
-                        isUniversityFavorite.value = false
+                        favState.value = false
                     } else {
                         val insertUni = RoomModel(
                             uni_id = 0,
@@ -217,11 +222,11 @@ fun UniversityItem(university: Universities,navController: NavController,viewMod
                             rector = university.rector ?: "",
                         )
                         viewModel.insertFavUni(insertUni)
-                        isUniversityFavorite.value = true
+                        favState.value = true
                     }
                 }) {
                     Icon(
-                        imageVector = if (isUniversityFavorite.value == true) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        imageVector = if (favState.value) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
                         contentDescription = ""
                     )
                 }

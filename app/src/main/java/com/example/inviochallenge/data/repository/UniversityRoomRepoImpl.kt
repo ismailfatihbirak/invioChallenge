@@ -20,7 +20,4 @@ class UniversityRoomRepoImpl @Inject constructor(private val dao : UniDao)  : Un
         return dao.deleteFavoriteUni(name)
     }
 
-    override suspend fun isFavoriteUniExists(name: String): Boolean {
-        return dao.isFavoriteUniExists(name)
-    }
 }

@@ -9,5 +9,4 @@ data class HomeState (
     val error : String = "",
     val page : Int = 1,
     val favUnis : List<RoomModel> = listOf(),
-    val favExists : Boolean = false,
 )

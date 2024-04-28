@@ -76,7 +76,7 @@ fun FavoriteScreen(navController: NavController,
             }else{
                 homeViewModel.favState.value.favUnis.forEach { university ->
                     val uni = Universities(university.name,university.phone,university.fax,university.website,university.email,university.adress,university.rector)
-                    UniversityItem(uni,navController,homeViewModel,Modifier.padding(all = 6.dp),false)
+                    UniversityItem(uni,navController,homeViewModel,Modifier.padding(all = 6.dp),false,false)
                 }
             }
             
