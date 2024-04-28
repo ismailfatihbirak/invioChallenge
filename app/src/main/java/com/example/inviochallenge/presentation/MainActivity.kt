@@ -1,4 +1,4 @@
-package com.example.inviochallenge.presentation.theme
+package com.example.inviochallenge.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,21 +8,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.inviochallenge.domain.model.Data
-import com.example.inviochallenge.presentation.theme.favorite.FavoriteScreen
-import com.example.inviochallenge.presentation.theme.home.HomeScreen
-import com.example.inviochallenge.presentation.theme.home.HomeViewModel
-import com.example.inviochallenge.presentation.theme.splash.SplashScreen
+import com.example.inviochallenge.presentation.favorite.FavoriteScreen
+import com.example.inviochallenge.presentation.home.HomeScreen
+import com.example.inviochallenge.presentation.splash.SplashScreen
 import com.example.inviochallenge.presentation.theme.ui.InvioChallengeTheme
-import com.example.inviochallenge.presentation.theme.website.WebsiteScreen
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.example.inviochallenge.presentation.website.WebsiteScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

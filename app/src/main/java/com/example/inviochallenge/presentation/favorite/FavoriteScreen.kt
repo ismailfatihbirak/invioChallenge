@@ -1,4 +1,4 @@
-package com.example.inviochallenge.presentation.theme.favorite
+package com.example.inviochallenge.presentation.favorite
 
 import android.util.Log
 import androidx.compose.foundation.layout.Box
@@ -38,9 +38,9 @@ import com.example.inviochallenge.R
 import com.example.inviochallenge.domain.model.Data
 import com.example.inviochallenge.domain.model.RoomModel
 import com.example.inviochallenge.domain.model.Universities
-import com.example.inviochallenge.presentation.theme.home.DataItem
-import com.example.inviochallenge.presentation.theme.home.HomeViewModel
-import com.example.inviochallenge.presentation.theme.home.UniversityItem
+import com.example.inviochallenge.presentation.home.DataItem
+import com.example.inviochallenge.presentation.home.HomeViewModel
+import com.example.inviochallenge.presentation.home.UniversityItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

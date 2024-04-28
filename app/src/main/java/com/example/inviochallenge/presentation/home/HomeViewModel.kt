@@ -1,4 +1,4 @@
-package com.example.inviochallenge.presentation.theme.home
+package com.example.inviochallenge.presentation.home
 
 import android.util.Log
 import androidx.compose.runtime.State

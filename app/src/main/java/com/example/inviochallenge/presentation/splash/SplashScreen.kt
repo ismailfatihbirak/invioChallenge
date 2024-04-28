@@ -1,4 +1,4 @@
-package com.example.inviochallenge.presentation.theme.splash
+package com.example.inviochallenge.presentation.splash
 
 import android.net.Uri
 import android.util.Log
@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.inviochallenge.R
-import com.example.inviochallenge.presentation.theme.home.HomeViewModel
+import com.example.inviochallenge.presentation.home.HomeViewModel
 import com.google.gson.Gson
 import kotlinx.coroutines.delay
 import java.net.URLEncoder

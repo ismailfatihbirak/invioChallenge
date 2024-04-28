@@ -1,4 +1,4 @@
-package com.example.inviochallenge.presentation.theme.home
+package com.example.inviochallenge.presentation.home
 
 import com.example.inviochallenge.domain.model.Data
 import com.example.inviochallenge.domain.model.RoomModel

@@ -1,4 +1,4 @@
-package com.example.inviochallenge.presentation.theme.website
+package com.example.inviochallenge.presentation.website
 
 import android.view.ViewGroup
 import android.webkit.WebView

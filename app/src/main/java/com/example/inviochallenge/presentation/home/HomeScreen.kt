@@ -1,4 +1,4 @@
-package com.example.inviochallenge.presentation.theme.home
+package com.example.inviochallenge.presentation.home
 
 import android.content.Context
 import android.content.Intent
