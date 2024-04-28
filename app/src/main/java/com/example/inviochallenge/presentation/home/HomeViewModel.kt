@@ -44,14 +44,9 @@ class HomeViewModel @Inject constructor(
                 is Resource.Success -> {
                     val updatedList = it.data ?: emptyList()
                     val currentState = _state.value
-
-                    Log.e("ababab",_state.value.page.toString())
-
                     _state.value = currentState.copy(
                         unis = currentState.unis + updatedList
                     )
-
-                    Log.e("ababab",_state.value.page.toString())
                 }
                 is Resource.Loading -> {
                     _state.value = HomeState(isLoading = true)

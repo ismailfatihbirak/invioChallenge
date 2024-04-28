@@ -7,6 +7,5 @@ data class HomeState (
     val isLoading : Boolean = false,
     val unis : List<Data> = listOf(),
     val error : String = "",
-    val page : Int = 1,
     val favUnis : List<RoomModel> = listOf(),
 )

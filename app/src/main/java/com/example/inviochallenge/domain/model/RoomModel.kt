@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull
 data class RoomModel (
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo("uni_id") @NotNull var uni_id    : Int,
-    @ColumnInfo("icon_state") @NotNull var icon_state: String,
     @ColumnInfo("name") @NotNull var name      : String,
     @ColumnInfo("phone") @NotNull var phone     : String,
     @ColumnInfo("fax") @NotNull var fax       : String,

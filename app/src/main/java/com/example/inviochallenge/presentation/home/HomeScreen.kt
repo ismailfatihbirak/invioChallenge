@@ -212,7 +212,6 @@ fun UniversityItem(university: Universities,
                     } else {
                         val insertUni = RoomModel(
                             uni_id = 0,
-                            icon_state = "true",
                             name = university.name ?: "",
                             phone = university.phone ?: "",
                             fax = university.fax ?: "",
@@ -254,7 +253,9 @@ fun UniversityItem(university: Universities,
             TextRow(string = "fax:${university.fax}" , onClick = {})
             Divider()
             TextRow(string = "website:${university.website}" , onClick = {
-                    navController.navigate("website/${Uri.encode(university.website)}")
+                    navController.navigate("website/" +
+                            "${Uri.encode(university.website)}/" +
+                            "${university.name}")
             })
             Divider()
             TextRow(string = "email:${university.email}" , onClick = {})

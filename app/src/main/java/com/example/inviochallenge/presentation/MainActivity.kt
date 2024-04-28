@@ -51,16 +51,15 @@ fun ScreenTransations() {
         composable("favorite") { backStackEntry ->
             FavoriteScreen(navController)
         }
-        composable("website/{url}",
+        composable("website/{url}/{name}",
             arguments= listOf(
-                navArgument("url") {type = NavType.StringType}
+                navArgument("url") {type = NavType.StringType},
+                navArgument("name") {type = NavType.StringType}
             )) { backStackEntry ->
             val url = backStackEntry.arguments!!.getString("url")
-            WebsiteScreen(url = url!!)
+            val name = backStackEntry.arguments!!.getString("name")
+            WebsiteScreen(url = url!!,navController,name!!)
         }
-
-
-
     }
 }
 
